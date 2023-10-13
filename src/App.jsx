@@ -1,5 +1,7 @@
+import AdminDashboard from "./features/AdminDashboard";
+
 const App = () => {
-  return <div>Hello</div>;
+  return <AdminDashboard />;
 };
 
 export default App;
