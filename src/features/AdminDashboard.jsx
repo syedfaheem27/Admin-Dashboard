@@ -3,8 +3,9 @@ import AdminTable from "./AdminTable";
 import Footer from "./Footer";
 import SearchBar from "./SearchBar";
 import Spinner from "../ui/Spinner";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
+import { AppContext } from "../context/AppContext";
 
 const StyledDashboard = styled.div`
   max-width: 95%;
@@ -20,11 +21,26 @@ const StyledTableContainer = styled.div`
 `;
 
 export default function AdminDashboard() {
-  const [users, setUsers] = useState([]);
+  const { setUsers } = useContext(AppContext);
 
-  //a way to cache the initial data
-  const [originalUsers, setOriginalUsers] = useState([]);
+  //a way to cache the original data
+  const [initialUsers, setInitialUsers] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
+
+  function searchUsers(searchQuery) {
+    const filteredUsers = initialUsers.filter(
+      (user) =>
+        user.name.startsWith(searchQuery.toLowerCase()) ||
+        user.name.startsWith(searchQuery.toUpperCase()) ||
+        user.email.startsWith(searchQuery.toLowerCase()) ||
+        user.email.startsWith(searchQuery.toUpperCase()) ||
+        user.role.startsWith(searchQuery.toLowerCase()) ||
+        user.role.startsWith(searchQuery.toUpperCase())
+    );
+
+    setUsers(filteredUsers);
+  }
 
   useEffect(() => {
     async function getUsers() {
@@ -35,7 +51,7 @@ export default function AdminDashboard() {
       const data = await response.json();
       const users = addCheckedFlag(data);
       setUsers(users);
-      setOriginalUsers(users);
+      setInitialUsers(users);
     }
 
     function addCheckedFlag(data) {
@@ -52,21 +68,7 @@ export default function AdminDashboard() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
-
-  function searchUsers(searchQuery) {
-    const filteredUsers = originalUsers.filter(
-      (user) =>
-        user.name.startsWith(searchQuery.toLowerCase()) ||
-        user.name.startsWith(searchQuery.toUpperCase()) ||
-        user.email.startsWith(searchQuery.toLowerCase()) ||
-        user.email.startsWith(searchQuery.toUpperCase()) ||
-        user.role.startsWith(searchQuery.toLowerCase()) ||
-        user.role.startsWith(searchQuery.toUpperCase())
-    );
-
-    setUsers(filteredUsers);
-  }
+  }, [setUsers]);
 
   return (
     <StyledDashboard>
@@ -74,12 +76,13 @@ export default function AdminDashboard() {
       {isLoading ? (
         <Spinner />
       ) : (
-        <StyledTableContainer>
-          <AdminTable users={users} setUsers={setUsers} />
-        </StyledTableContainer>
+        <>
+          <StyledTableContainer>
+            <AdminTable />
+          </StyledTableContainer>
+          <Footer />
+        </>
       )}
-
-      <Footer />
     </StyledDashboard>
   );
 }
