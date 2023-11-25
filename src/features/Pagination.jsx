@@ -32,7 +32,6 @@ const StyledPagButton = styled.button`
 const Pagination = () => {
   const totalCount = 4;
   const arr = Array.from({ length: totalCount }, (_, i) => i + 1);
-  console.log(arr);
   return (
     <StyledPagContainer>
       <StyledPagButton>

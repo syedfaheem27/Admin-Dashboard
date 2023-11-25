@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import TableRow from "./TableRow";
 
-const mockData = Array.from({ length: 24 }, (_, i) => {
-  return {
-    name: "Faheem",
-    email: "faheem@test.com",
-    role: "manager",
-    id: i,
-  };
-});
+// const mockData = Array.from({ length: 44 }, (_, i) => {
+//   return {
+//     name: `Faheem-${i}`,
+//     email: `faheem${i}@test${i}.com${i}`,
+//     role: "manager",
+//     id: i,
+//   };
+// });
 const StyledTable = styled.table`
   width: 100%;
   background-color: var(--color-gray-100);
@@ -24,14 +24,24 @@ const StyledTable = styled.table`
   }
 `;
 
-export default function AdminTable() {
+export default function AdminTable({ users, setUsers }) {
+  function toggleVisibleUsers() {
+    const updatedUsers = users.map((user) => {
+      return {
+        ...user,
+        checked: !user.checked,
+      };
+    });
+    console.log(updatedUsers);
+    setUsers(updatedUsers);
+  }
   return (
     <>
       <StyledTable>
         <thead>
           <tr>
             <th>
-              <input type="checkbox" />
+              <input type="checkbox" onChange={toggleVisibleUsers} />
             </th>
             <th>Name</th>
             <th>Email</th>
@@ -41,7 +51,7 @@ export default function AdminTable() {
         </thead>
 
         <tbody>
-          {mockData.map((user) => {
+          {users.map((user) => {
             return <TableRow key={user.id} user={user} />;
           })}
         </tbody>

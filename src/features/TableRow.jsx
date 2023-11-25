@@ -1,18 +1,38 @@
+import { useState } from "react";
 import Actions from "./Actions";
+import styled from "styled-components";
+import { useEffect } from "react";
+
+const StyledTRow = styled.tr`
+  background-color: ${(props) => (props.checked ? "#52525223" : "")};
+`;
 
 const TableRow = ({ user }) => {
+  const [userState, setUserState] = useState([]);
+  useEffect(() => {
+    setUserState(user);
+  }, [user]);
+
   return (
-    <tr>
+    <StyledTRow checked={userState.checked}>
       <td>
-        <input type="checkbox" />
+        <input
+          type="checkbox"
+          checked={userState?.checked ?? false}
+          onChange={() =>
+            setUserState((prevUser) => {
+              return { ...prevUser, checked: !prevUser.checked };
+            })
+          }
+        />
       </td>
-      <td>{user.name}</td>
-      <td>{user.email}</td>
-      <td>{user.role}</td>
+      <td>{userState.name}</td>
+      <td>{userState.email}</td>
+      <td>{userState.role}</td>
       <td>
         <Actions />
       </td>
-    </tr>
+    </StyledTRow>
   );
 };
 

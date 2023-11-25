@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 
 const StyledSearch = styled.input`
@@ -10,16 +9,12 @@ const StyledSearch = styled.input`
   }
 `;
 
-function SearchBar() {
-  const [search, setSearch] = useState("");
+function SearchBar({ searchUsers }) {
   return (
     <StyledSearch
       type="text"
       placeholder="Search by name,role or email"
-      value={search}
-      onChange={(e) => {
-        setSearch(e.target.value);
-      }}
+      onChange={(e) => searchUsers(e.target.value)}
     />
   );
 }
