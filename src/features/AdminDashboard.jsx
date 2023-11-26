@@ -6,6 +6,7 @@ import Spinner from "../ui/Spinner";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
 import { AppContext } from "../context/AppContext";
+import { API } from "../utils/constants";
 
 const StyledDashboard = styled.div`
   max-width: 95%;
@@ -44,9 +45,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     async function getUsers() {
-      const response = await fetch(
-        "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json"
-      );
+      const response = await fetch(API);
 
       const data = await response.json();
       const users = addCheckedFlag(data);
