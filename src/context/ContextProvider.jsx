@@ -4,6 +4,7 @@ import { AppContext } from "./AppContext";
 const ContextProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [pageNum, setPageNum] = useState(1);
+  const [isChecked, setIsChecked] = useState(false)
   return (
     <AppContext.Provider
       value={{
@@ -11,6 +12,8 @@ const ContextProvider = ({ children }) => {
         pageNum,
         setPageNum,
         setUsers,
+        isChecked,
+        setIsChecked
       }}
     >
       {children}

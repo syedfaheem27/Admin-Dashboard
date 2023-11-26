@@ -38,6 +38,7 @@ const StyledPagButton = styled.button`
 `;
 
 const Pagination = () => {
+
   const { users, pageNum, setPageNum } = useContext(AppContext);
 
   const totalCount = Math.ceil(users.length / PAGE_LEN);
@@ -48,6 +49,13 @@ const Pagination = () => {
       setPageNum(pageNum);
     } else {
       setPageNum((num) => num - 1);
+    }
+  }
+  function nextPageHandler() {
+    if (pageNum === totalCount) {
+      setPageNum(pageNum);
+    } else {
+      setPageNum(num => num + 1)
     }
   }
   return (
@@ -70,7 +78,9 @@ const Pagination = () => {
         </StyledPagButton>
       ))}
 
-      <StyledPagButton disabled={pageNum === totalCount}>
+      <StyledPagButton disabled={pageNum === totalCount}
+        onClick={nextPageHandler}
+      >
         <HiChevronRight />
       </StyledPagButton>
 

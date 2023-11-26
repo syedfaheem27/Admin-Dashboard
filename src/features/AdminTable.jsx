@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import TableRow from "./TableRow";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { PAGE_LEN } from "../utils/constants";
 
@@ -28,40 +28,40 @@ const StyledTable = styled.table`
 `;
 
 export default function AdminTable() {
-  const { users, setUsers, pageNum, setPageNum } = useContext(AppContext);
+  const { users, pageNum, setUsers, isChecked, setIsChecked } = useContext(AppContext);
 
-  const filteredUsers = users.filter((user) => {
+  let filteredUsers = users.filter((user, i) => {
     const userStart = (pageNum - 1) * PAGE_LEN + 1;
     const userEnd = pageNum * PAGE_LEN;
-    const id = +user.id;
-    return id >= userStart && id <= userEnd;
+    const filter = i + 1
+    return filter >= userStart && filter <= userEnd;
   });
 
-  useEffect(() => {
-    if (users.length === 0) return;
-
-    if (Math.ceil(users.length / PAGE_LEN) === pageNum) return;
-
-    if (Math.ceil(users.length / PAGE_LEN) < pageNum)
-      setPageNum(users.length / PAGE_LEN);
-  }, [users, pageNum, setPageNum]);
-
-  function toggleVisibleUsers() {
-    const updatedUsers = users.map((user) => {
-      return {
-        ...user,
-        checked: !user.checked,
-      };
-    });
+  function toggleCheckedUsers() {
+    setIsChecked(check => !check)
+    const updatedUsers = users.map((user, i) => {
+      const userStart = (pageNum - 1) * PAGE_LEN + 1;
+      const userEnd = pageNum * PAGE_LEN;
+      const filter = i + 1;
+      if (filter >= userStart && filter <= userEnd) {
+        return { ...user, checked: !user.checked }
+      } else return user
+    })
     setUsers(updatedUsers);
+
   }
+
+
   return (
     <>
       <StyledTable>
         <thead>
           <tr>
             <th>
-              <input type="checkbox" onChange={toggleVisibleUsers} />
+              <input type="checkbox"
+                onChange={toggleCheckedUsers}
+                checked={isChecked}
+              />
             </th>
             <th>Name</th>
             <th>Email</th>
