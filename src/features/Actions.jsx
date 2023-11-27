@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { BiTrash } from "react-icons/bi";
 import { BiEdit } from "react-icons/bi";
+import Modal from "../ui/Modal";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
+import { useEffect } from "react";
+import { PAGE_LEN } from "../utils/constants";
 
 const StyledActionContainer = styled.span`
   display: flex;
@@ -13,18 +18,27 @@ const StyledActionContainer = styled.span`
   }
 `;
 
-const Actions = () => {
+const Actions = ({ user }) => {
+  // const { setUsers } = useContext(AppContext)
+  // function handleDelete() {
+  //   setUsers(users => users.filter(us => us.id !== user.id))
+  // }
+
+
   return (
-    <>
+    <Modal>
       <StyledActionContainer>
-        <button>
+        <Modal.Action opens="edit">
           <BiEdit />
-        </button>
-        <button>
+        </Modal.Action>
+        <Modal.Action opens="delete" >
           <BiTrash />
-        </button>
+        </Modal.Action>
+        <Modal.Body user={user} />
+
+
       </StyledActionContainer>
-    </>
+    </Modal>
   );
 };
 

@@ -16,11 +16,16 @@ export default function Footer() {
   const { users, setUsers, pageNum, setPageNum, setIsChecked } = useContext(AppContext)
 
   function handleDeleteUsers() {
-    setUsers(prevUsers => prevUsers.filter(user => !user.checked))
+    // const deleteId = users[0].id;
+    //handle multiple user deletions - in that case update the cached users
+    setUsers(prevUsers => prevUsers.filter(user => !user.checked));
+    // setCachedUsers(users => users.filter(user => user.id !== deleteId))
     setIsChecked(false)
 
   }
 
+  //Ensures that the page number changes if the total pages are less than 
+  //the current page number which can happen if we delete all users on a certain page
   useEffect(() => {
     if (Math.ceil(users.length / PAGE_LEN) === pageNum || users.length === 0) return;
 

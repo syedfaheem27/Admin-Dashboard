@@ -8,6 +8,7 @@ import {
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { PAGE_LEN } from "../utils/constants";
+import { useEffect } from "react";
 
 const StyledPagContainer = styled.div`
   display: flex;
@@ -16,9 +17,8 @@ const StyledPagContainer = styled.div`
 `;
 
 const StyledPagButton = styled.button`
-  /* background: var(--color-gray-300); */
   background-color: ${(props) =>
-    props.active === "true" ? "#737373" : "#d4d4d4"};
+    props.active === "true" ? "var(--color-gray-500)" : "var(--color-gray-300)"};
   color: ${(props) => (props.active == "true" ? "white" : "black")};
   width: 1.5rem;
   padding: 0.3rem;
@@ -39,10 +39,11 @@ const StyledPagButton = styled.button`
 
 const Pagination = () => {
 
-  const { users, pageNum, setPageNum } = useContext(AppContext);
+  const { users, setUsers, pageNum, setPageNum, setIsChecked } = useContext(AppContext);
 
-  const totalCount = Math.ceil(users.length / PAGE_LEN);
-  const arr = Array.from({ length: totalCount }, (_, i) => i + 1);
+  const totalPages = Math.ceil(users.length / PAGE_LEN);
+
+  const arr = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   function previousPageHandler() {
     if (pageNum === 1) {
@@ -51,13 +52,27 @@ const Pagination = () => {
       setPageNum((num) => num - 1);
     }
   }
+
   function nextPageHandler() {
-    if (pageNum === totalCount) {
+    if (pageNum === totalPages) {
       setPageNum(pageNum);
     } else {
       setPageNum(num => num + 1)
     }
   }
+
+
+  //Ensuring that once we change pages, the users that are marked for deletion
+  //are unmarked and also the global checkbox is unchecked
+  useEffect(() => {
+    setIsChecked(false)
+    setUsers(prevUsers => prevUsers.map(user => {
+      return {
+        ...user,
+        checked: false
+      }
+    }))
+  }, [pageNum, setIsChecked, setUsers])
   return (
     <StyledPagContainer>
       <StyledPagButton onClick={() => setPageNum(1)} disabled={pageNum === 1}>
@@ -78,15 +93,15 @@ const Pagination = () => {
         </StyledPagButton>
       ))}
 
-      <StyledPagButton disabled={pageNum === totalCount}
+      <StyledPagButton disabled={pageNum === totalPages}
         onClick={nextPageHandler}
       >
         <HiChevronRight />
       </StyledPagButton>
 
       <StyledPagButton
-        onClick={() => setPageNum(totalCount)}
-        disabled={pageNum === totalCount}
+        onClick={() => setPageNum(totalPages)}
+        disabled={pageNum === totalPages}
       >
         <HiChevronDoubleRight />
       </StyledPagButton>

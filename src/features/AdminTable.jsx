@@ -69,7 +69,6 @@ export default function AdminTable() {
             <th>Actions</th>
           </tr>
         </thead>
-
         <tbody>
           {filteredUsers.map((user) => {
             return <TableRow key={user.id} user={user} />;

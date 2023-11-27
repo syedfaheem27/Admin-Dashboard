@@ -16,7 +16,8 @@ const TableRow = ({ user }) => {
     setUsers(users => users.map(user => user.id === updatedUser.id ? updatedUser : user))
   }
 
-  return (
+  return (<>
+
     <StyledTRow checked={user.checked}>
       <td>
         <input
@@ -30,9 +31,10 @@ const TableRow = ({ user }) => {
       <td>{user.email}</td>
       <td>{user.role}</td>
       <td>
-        <Actions />
+        <Actions user={user} />
       </td>
     </StyledTRow>
+  </>
   );
 };
 
