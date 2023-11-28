@@ -2,10 +2,6 @@ import styled from "styled-components";
 import { BiTrash } from "react-icons/bi";
 import { BiEdit } from "react-icons/bi";
 import Modal from "../ui/Modal";
-import { useContext } from "react";
-import { AppContext } from "../context/AppContext";
-import { useEffect } from "react";
-import { PAGE_LEN } from "../utils/constants";
 
 const StyledActionContainer = styled.span`
   display: flex;

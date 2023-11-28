@@ -6,6 +6,8 @@ import styled from "styled-components";
 
 import { ModalContext } from "../context/ModalContext";
 import { AppContext } from "../context/AppContext";
+import EditForm from "./EditForm";
+import DeleteUser from "./DeleteUser";
 
 
 const StyledOverlay = styled.div`
@@ -20,9 +22,10 @@ const StyledModal = styled.div`
     padding: 3em 2em;
     left: 50%;
     top: 50%;
-    transform: translate(-50%);
+    transform: translateY(-50%) translateX(-50%);
     z-index: 3;
-    border: 3px solid red;
+    background-color: rgba(115, 115, 115,0.8);//change the opacity
+    border-radius: 8px;
 `
 
 
@@ -50,43 +53,46 @@ const Action = ({ children, opens }) => {
 
 const Body = ({ user }) => {
     const { opens, setOpens } = useContext(ModalContext);
-    const { setUsers } = useContext(AppContext);
+    const { setUsers, setCachedUsers } = useContext(AppContext);
 
     if (!opens) return null;
+
+    function handleEditUser(e) {
+        e.preventDefault()
+        const form = e.target;
+        const formData = new FormData(form);
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const role = formData.get('role');
+
+        //validate input and use regex patterns to validate email
+
+        const updatedUser = {
+            name, email, role
+        }
+
+        //update cached users as after editing and then searching, they come back
+        setUsers(users => users.map(prevUser => prevUser.id === user.id ? { ...user, ...updatedUser } : prevUser));
+        setCachedUsers(users => users.map(prevUser => prevUser.id === user.id ? { ...user, ...updatedUser } : prevUser));
+
+        setOpens(null)
+
+    }
+
+    function handleDeleteUser() {
+        setUsers(users => users.filter(usr => usr.id !== user.id));
+        setCachedUsers(users => users.filter(usr => usr.id !== user.id));
+    }
 
     return <StyledOverlay onClick={() => setOpens(null)}>
         <StyledModal onClick={e => e.stopPropagation()}>
             {
-                opens === "edit" && <form onSubmit={e => {
-                    e.preventDefault()
-                    const form = e.target;
-                    const formData = new FormData(form);
-                    const name = formData.get('name');
-                    const email = formData.get('email');
-                    const role = formData.get('role');
-
-                    const updatedUser = {
-                        name, email, role
-                    }
-
-                    setUsers(users => users.map(prevUser => prevUser.id === user.id ? { ...user, ...updatedUser } : prevUser));
-                    setOpens(null)
-
-                }}>
-                    <label htmlFor="name">Name:</label>
-                    <input type="text" id="name" name="name" defaultValue={user.name} />
-                    <br />
-                    <label htmlFor="email">Email:</label>
-                    <input type="email" id="email" name="email" defaultValue={user.email} />
-                    <br />
-                    <label htmlFor="role">Role:</label>
-                    <input type="text" id="role" name="role" defaultValue={user.role} />
-                    <br />
-                    <button>Submit</button>
-                </form>
+                opens === "edit" && <EditForm user={user}
+                    onSubmit={handleEditUser} />
             }
+
             {
-                opens === 'delete' && <h1>Delete{user.name}</h1>
+                opens === 'delete' && <DeleteUser onDelete={handleDeleteUser} user={user} />
             }
         </StyledModal>
     </StyledOverlay >

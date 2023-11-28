@@ -18,8 +18,8 @@ const StyledPagContainer = styled.div`
 
 const StyledPagButton = styled.button`
   background-color: ${(props) =>
-    props.active === "true" ? "var(--color-gray-500)" : "var(--color-gray-300)"};
-  color: ${(props) => (props.active == "true" ? "white" : "black")};
+    props.$active ? "var(--color-gray-500)" : "var(--color-gray-300)"};
+  color: ${(props) => (props.$active ? "white" : "black")};
   width: 1.5rem;
   padding: 0.3rem;
   border: none;
@@ -86,7 +86,7 @@ const Pagination = () => {
       {arr.map((a) => (
         <StyledPagButton
           key={a}
-          active={pageNum === a ? "true" : "false"}
+          $active={pageNum === a}
           onClick={() => setPageNum(a)}
         >
           <span>{a}</span>

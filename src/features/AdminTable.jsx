@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import TableRow from "./TableRow";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../context/AppContext";
 import { PAGE_LEN } from "../utils/constants";
 

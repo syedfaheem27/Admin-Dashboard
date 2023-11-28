@@ -16,14 +16,24 @@ export default function Footer() {
   const { users, setUsers, pageNum, setPageNum, setIsChecked, setCachedUsers } = useContext(AppContext)
 
   function handleDeleteUsers() {
-    // const deleteId = users[0].id;
-    //handle multiple user deletions - in that case update the cached users
-    const toBeDeleted = users.map(user => user.id);
-    setUsers(prevUsers => prevUsers.filter(user => !user.checked));
-    setCachedUsers(users => users.filter(user => !toBeDeleted.includes(user.id)))
-    setIsChecked(false)
-    console.log(toBeDeleted)
+    //Guard - condition
+    if (users.filter(user => user.checked).length === 0) return;
 
+    //An array of id's that need to be deleted from cached users.
+    //can't do so in an effect as in case of a user that will be 
+    //deleted after performing a search. There can be any number of users
+    //based on the search query and setting the cached users to the users in view
+    //will not work
+    const toBeDeleted = users.filter(user => user.checked).map(user => user.id);
+
+    //Ensures that the view gets updated
+    setUsers(prevUsers => prevUsers.filter(user => !user.checked));
+
+    //Ensures that the cached users are updated after deletion
+    setCachedUsers(users => users.filter(user => !toBeDeleted.includes(user.id)))
+
+    //Unchecking the global checkbox after deletion
+    setIsChecked(false)
 
   }
 

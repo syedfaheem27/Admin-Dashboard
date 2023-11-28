@@ -23,17 +23,6 @@ const StyledTableContainer = styled.div`
 
 export default function AdminDashboard() {
   const { setUsers, cachedUsers, setCachedUsers } = useContext(AppContext);
-  // const { setUsers } = useContext(AppContext);
-
-  //A problem with this is that when we delete the user after we perform 
-  // a search. After deletion and removing the search query, the user comes back
-  //as we are always filtering based on this cached data which never changes which
-  // brings the deleted user back
-
-  //TODO: FIX THE BUG MENTIONED ABOVE
-
-  //a way to cache the original data
-  // const [initialUsers, setInitialUsers] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -59,7 +48,6 @@ export default function AdminDashboard() {
       const data = await response.json();
       const users = addCheckedFlag(data);
       setUsers(users);
-      // setInitialUsers(users);
       setCachedUsers(users)
     }
 
@@ -77,7 +65,7 @@ export default function AdminDashboard() {
     } finally {
       setIsLoading(false);
     }
-  }, [setUsers]);
+  }, [setUsers, setCachedUsers]);
 
   return (
     <StyledDashboard>
