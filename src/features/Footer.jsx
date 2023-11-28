@@ -13,14 +13,17 @@ const StyledFooter = styled.div`
 `;
 
 export default function Footer() {
-  const { users, setUsers, pageNum, setPageNum, setIsChecked } = useContext(AppContext)
+  const { users, setUsers, pageNum, setPageNum, setIsChecked, setCachedUsers } = useContext(AppContext)
 
   function handleDeleteUsers() {
     // const deleteId = users[0].id;
     //handle multiple user deletions - in that case update the cached users
+    const toBeDeleted = users.map(user => user.id);
     setUsers(prevUsers => prevUsers.filter(user => !user.checked));
-    // setCachedUsers(users => users.filter(user => user.id !== deleteId))
+    setCachedUsers(users => users.filter(user => !toBeDeleted.includes(user.id)))
     setIsChecked(false)
+    console.log(toBeDeleted)
+
 
   }
 

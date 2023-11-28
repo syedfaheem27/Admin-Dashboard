@@ -3,7 +3,7 @@ import { AppContext } from "./AppContext";
 
 const ContextProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
-  // const [cachedUsers, setCachedUsers] = useState([]);
+  const [cachedUsers, setCachedUsers] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [isChecked, setIsChecked] = useState(false)
   return (
@@ -15,8 +15,8 @@ const ContextProvider = ({ children }) => {
         setUsers,
         isChecked,
         setIsChecked,
-        // cachedUsers,
-        // setCachedUsers
+        cachedUsers,
+        setCachedUsers
       }}
     >
       {children}
