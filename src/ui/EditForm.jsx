@@ -1,5 +1,7 @@
 import styled from "styled-components"
 import Button from "./Button"
+import { useContext } from "react"
+import { AppContext } from "../context/AppContext"
 
 const StyledForm = styled.form`
     display: flex;
@@ -33,8 +35,28 @@ const StyledInput = styled.input`
      }
 `
 
-function EditForm({ user, onSubmit }) {
-    return <StyledForm onSubmit={onSubmit}>
+function EditForm({ user, closeModal }) {
+    const { setUsers, setCachedUsers } = useContext(AppContext)
+    function handleEditUser(e) {
+        e.preventDefault()
+        const form = e.target;
+        const formData = new FormData(form);
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const role = formData.get('role');
+
+        //validate input and use regex patterns to validate email
+
+        const updatedUser = {
+            name, email, role
+        }
+
+        //update cached users as after editing and then searching, they come back
+        setUsers(users => users.map(prevUser => prevUser.id === user.id ? { ...user, ...updatedUser } : prevUser));
+        setCachedUsers(users => users.map(prevUser => prevUser.id === user.id ? { ...user, ...updatedUser } : prevUser));
+        closeModal()
+    }
+    return <StyledForm onSubmit={handleEditUser}>
         <StyledDiv>
             <StyledLabel htmlFor="name">Name:</StyledLabel>
             <StyledInput type="text" id='name' name="name" defaultValue={user.name} />

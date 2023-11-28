@@ -31,8 +31,6 @@ const Actions = ({ user }) => {
           <BiTrash />
         </Modal.Action>
         <Modal.Body user={user} />
-
-
       </StyledActionContainer>
     </Modal>
   );

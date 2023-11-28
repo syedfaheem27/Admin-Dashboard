@@ -5,7 +5,6 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { ModalContext } from "../context/ModalContext";
-import { AppContext } from "../context/AppContext";
 import EditForm from "./EditForm";
 import DeleteUser from "./DeleteUser";
 
@@ -53,46 +52,18 @@ const Action = ({ children, opens }) => {
 
 const Body = ({ user }) => {
     const { opens, setOpens } = useContext(ModalContext);
-    const { setUsers, setCachedUsers } = useContext(AppContext);
 
     if (!opens) return null;
-
-    function handleEditUser(e) {
-        e.preventDefault()
-        const form = e.target;
-        const formData = new FormData(form);
-        const name = formData.get('name');
-        const email = formData.get('email');
-        const role = formData.get('role');
-
-        //validate input and use regex patterns to validate email
-
-        const updatedUser = {
-            name, email, role
-        }
-
-        //update cached users as after editing and then searching, they come back
-        setUsers(users => users.map(prevUser => prevUser.id === user.id ? { ...user, ...updatedUser } : prevUser));
-        setCachedUsers(users => users.map(prevUser => prevUser.id === user.id ? { ...user, ...updatedUser } : prevUser));
-
-        setOpens(null)
-
-    }
-
-    function handleDeleteUser() {
-        setUsers(users => users.filter(usr => usr.id !== user.id));
-        setCachedUsers(users => users.filter(usr => usr.id !== user.id));
-    }
 
     return <StyledOverlay onClick={() => setOpens(null)}>
         <StyledModal onClick={e => e.stopPropagation()}>
             {
                 opens === "edit" && <EditForm user={user}
-                    onSubmit={handleEditUser} />
+                    closeModal={() => setOpens(null)} />
             }
 
             {
-                opens === 'delete' && <DeleteUser onDelete={handleDeleteUser} user={user} />
+                opens === 'delete' && <DeleteUser user={user} />
             }
         </StyledModal>
     </StyledOverlay >

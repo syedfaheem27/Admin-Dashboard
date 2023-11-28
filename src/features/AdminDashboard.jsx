@@ -22,13 +22,12 @@ const StyledTableContainer = styled.div`
 `;
 
 export default function AdminDashboard() {
-  const { setUsers, cachedUsers, setCachedUsers } = useContext(AppContext);
+  const { setUsers, cachedUsers, setCachedUsers, setIsChecked } = useContext(AppContext);
 
   const [isLoading, setIsLoading] = useState(false);
 
   function searchUsers(searchQuery) {
     const filteredUsers = cachedUsers.filter(
-      // initialUsers.filter(
       (user) =>
         user.name.startsWith(searchQuery.toLowerCase()) ||
         user.name.startsWith(searchQuery.toUpperCase()) ||
@@ -39,6 +38,8 @@ export default function AdminDashboard() {
     );
 
     setUsers(filteredUsers);
+
+    setIsChecked(false)
   }
 
   useEffect(() => {
