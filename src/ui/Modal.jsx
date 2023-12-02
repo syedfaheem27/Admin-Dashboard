@@ -23,8 +23,15 @@ const StyledModal = styled.div`
     top: 50%;
     transform: translateY(-50%) translateX(-50%);
     z-index: 3;
-    background-color: rgba(115, 115, 115,0.8);//change the opacity
+    background-color: rgba(115, 115, 115,0.8);
     border-radius: 8px;
+    
+
+    @media (max-width: 380px){
+        &{
+            padding: 1em 0;
+        }
+    }
 `
 
 

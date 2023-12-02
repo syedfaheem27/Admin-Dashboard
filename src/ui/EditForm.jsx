@@ -45,7 +45,6 @@ function EditForm({ user, closeModal }) {
         const email = formData.get('email');
         const role = formData.get('role');
 
-        //validate input and use regex patterns to validate email
 
         const updatedUser = {
             name, email, role
@@ -59,7 +58,7 @@ function EditForm({ user, closeModal }) {
     return <StyledForm onSubmit={handleEditUser}>
         <StyledDiv>
             <StyledLabel htmlFor="name">Name:</StyledLabel>
-            <StyledInput type="text" id='name' name="name" defaultValue={user.name} />
+            <StyledInput type="text" id='name' name="name" defaultValue={user.name} required />
         </StyledDiv>
 
         <StyledDiv>
@@ -69,7 +68,7 @@ function EditForm({ user, closeModal }) {
 
         <StyledDiv>
             <StyledLabel htmlFor="role">Role:</StyledLabel>
-            <StyledInput type="text" id='role' name="role" defaultValue={user.role} />
+            <StyledInput type="text" id='role' name="role" defaultValue={user.role} required />
         </StyledDiv>
 
         <Button background="var(--color-gray-700)" hoverbackground='var(--color-gray-600)'>Submit</Button>

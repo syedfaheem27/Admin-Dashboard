@@ -13,7 +13,7 @@ import { useEffect } from "react";
 const StyledPagContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.5em;
 `;
 
 const StyledPagButton = styled.button`

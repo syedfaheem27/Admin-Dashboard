@@ -6,11 +6,17 @@ import Modal from "../ui/Modal";
 const StyledActionContainer = styled.span`
   display: flex;
   align-items: center;
+  flex-direction: column;
   gap: 0.5rem;
 
   & button {
     font-size: 1rem;
     cursor: pointer;
+  }
+  @media(min-width:380px){
+    &{
+      flex-direction: row;
+    }
   }
 `;
 
