@@ -24,7 +24,6 @@ const StyledPagButton = styled.button`
   padding: 0.3rem;
   border: none;
   border-radius: 50%;
-  font-weight: bold;
   cursor: pointer;
   display: flex;
   align-items: center;
