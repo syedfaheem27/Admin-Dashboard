@@ -19,6 +19,13 @@
   --color-gray-500: #737373;
   --color-gray-600: #525252;
   --color-gray-700: #262626;
+
+  /*Action Buttons*/
+  --color-blue-400: #38bdf8;
+  --color-blue-500: #0ea5e9;
+  --color-blue-600: #0284c7;
+  --color-danger-100: #ef4444;
+  --color-danger-200: #dc2626;
 }
 
 @media (min-width: 480px) {
@@ -27,7 +34,7 @@
   }
 }
 
-@media (min-width: 676px) {
+@media (min-width: 1020px) {
   * {
     font-size: 16px;
   }

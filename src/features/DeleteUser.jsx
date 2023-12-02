@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Button from "./Button";
+import Button from "../ui/Button";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 
@@ -15,7 +15,7 @@ letter-spacing: 0.04em;
     
 `
 const StyledUser = styled.span`
-    color: #dc2626;
+    color: var(--color-danger-200);
 `
 function DeleteUser({ user }) {
     const { setUsers, setCachedUsers } = useContext(AppContext);
@@ -30,7 +30,7 @@ function DeleteUser({ user }) {
             You are about to delete  <StyledUser>{user.name} </StyledUser>
             who is {user.role === 'admin' ? 'an' : 'a'}<StyledUser> {user.role}</StyledUser>
         </StyledHeading>
-        <Button background="#dc2626" hoverbackground="#ef4444" onClick={handleDeleteUser}>
+        <Button background="var(--color-danger-200)" hoverbackground="var(--color-danger-100)" onClick={handleDeleteUser}>
             Confirm
         </Button>
     </StyledDiv>

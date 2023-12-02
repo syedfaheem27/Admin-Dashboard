@@ -5,8 +5,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { ModalContext } from "../context/ModalContext";
-import EditForm from "./EditForm";
-import DeleteUser from "./DeleteUser";
+import DeleteUser from "../features/DeleteUser";
 
 
 const StyledOverlay = styled.div`
@@ -58,17 +57,13 @@ const Action = ({ children, opens }) => {
 
 
 const Body = ({ user }) => {
+    //opens prop makes this modal body reusable
     const { opens, setOpens } = useContext(ModalContext);
 
     if (!opens) return null;
 
     return <StyledOverlay onClick={() => setOpens(null)}>
         <StyledModal onClick={e => e.stopPropagation()}>
-            {
-                opens === "edit" && <EditForm user={user}
-                    closeModal={() => setOpens(null)} />
-            }
-
             {
                 opens === 'delete' && <DeleteUser user={user} />
             }

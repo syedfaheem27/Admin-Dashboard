@@ -18,8 +18,8 @@ const StyledPagContainer = styled.div`
 
 const StyledPagButton = styled.button`
   background-color: ${(props) =>
-    props.$active ? "var(--color-gray-500)" : "var(--color-gray-300)"};
-  color: ${(props) => (props.$active ? "white" : "black")};
+    props.$active ? "var(--color-blue-400)" : "var(--color-blue-500)"};
+  color: ${(props) => (props.$active ? "black" : "#fff")};
   width: 1.5rem;
   padding: 0.3rem;
   border: none;
@@ -33,7 +33,8 @@ const StyledPagButton = styled.button`
   opacity: ${(props) => (props.disabled ? "0.5" : "1")};
 
   &:hover {
-    background-color: var(--color-gray-200);
+    background-color: var(--color-blue-600);
+    color: #fff;
   }
 `;
 
