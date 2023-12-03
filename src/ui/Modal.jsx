@@ -22,7 +22,7 @@ const StyledModal = styled.div`
     top: 50%;
     transform: translateY(-50%) translateX(-50%);
     z-index: 3;
-    background-color: rgba(115, 115, 115,0.8);
+    background-color: rgb(115, 115, 115);
     border-radius: 8px;
     
 
