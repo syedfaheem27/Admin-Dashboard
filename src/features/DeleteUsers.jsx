@@ -29,7 +29,10 @@ export default function DeleteUsers() {
 
     function handleDeleteUsers() {
         //Guard - condition
-        if (users.filter(user => user.checked).length === 0) return;
+        if (users.filter(user => user.checked).length === 0) {
+            setOpens(null)
+            return;
+        }
 
         //An array of id's that need to be deleted from cached users.
         //can't do so in an effect as in case of a user that will be 
