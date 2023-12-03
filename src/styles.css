@@ -28,6 +28,19 @@
   --color-danger-200: #dc2626;
 }
 
+.delete-selected {
+  background-color: var(--color-pink-500);
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ffff;
+}
+
+.delete-selected:hover {
+  background-color: var(--color-pink-400);
+}
+
 @media (min-width: 480px) {
   * {
     font-size: 14px;

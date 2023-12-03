@@ -13,7 +13,7 @@ function SearchBar({ searchUsers }) {
   return (
     <StyledSearch
       type="text"
-      placeholder="Search by name,role or email"
+      placeholder="Search by name,email or role"
       onChange={(e) => searchUsers(e.target.value)}
     />
   );

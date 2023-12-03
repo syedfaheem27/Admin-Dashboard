@@ -7,6 +7,7 @@ import { useContext, useState } from "react";
 import { useEffect } from "react";
 import { AppContext } from "../context/AppContext";
 import { API } from "../utils/constants";
+import UsersNotFound from "../ui/UsersNotFound";
 
 const StyledDashboard = styled.div`
   max-width: 95%;
@@ -22,7 +23,7 @@ const StyledTableContainer = styled.div`
 `;
 
 export default function AdminDashboard() {
-  const { setUsers, cachedUsers, setCachedUsers, setIsChecked } = useContext(AppContext);
+  const { users, setUsers, cachedUsers, setCachedUsers, setIsChecked } = useContext(AppContext);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -66,12 +67,13 @@ export default function AdminDashboard() {
     }
   }, [setUsers, setCachedUsers]);
 
+
   return (
     <StyledDashboard>
       <SearchBar searchUsers={searchUsers} />
       {isLoading ? (
         <Spinner />
-      ) : (
+      ) : users.length === 0 ? <UsersNotFound /> : (
         <>
           <StyledTableContainer>
             <AdminTable />

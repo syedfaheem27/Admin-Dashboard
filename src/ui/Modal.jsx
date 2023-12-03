@@ -5,7 +5,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { ModalContext } from "../context/ModalContext";
-import DeleteUser from "../features/DeleteUser";
+import { createPortal } from "react-dom";
 
 
 const StyledOverlay = styled.div`
@@ -35,7 +35,6 @@ const StyledModal = styled.div`
 
 
 
-
 const Modal = ({ children }) => {
     const [opens, setOpens] = useState(null);
 
@@ -47,33 +46,31 @@ const Modal = ({ children }) => {
 }
 
 
-const Action = ({ children, opens }) => {
+const Action = ({ children, opens, customclass = "" }) => {
     const { setOpens } = useContext(ModalContext);
 
-    return <button onClick={() => setOpens(opens)}>
+    return <button className={customclass} onClick={() => setOpens(opens)}>
         {children}
     </button>
 }
 
 
-const Body = ({ user }) => {
+const Window = ({ children, name }) => {
     //opens prop makes this modal body reusable
     const { opens, setOpens } = useContext(ModalContext);
 
-    if (!opens) return null;
+    if (opens !== name) return null;
 
-    return <StyledOverlay onClick={() => setOpens(null)}>
+    return createPortal(<StyledOverlay onClick={() => setOpens(null)}>
         <StyledModal onClick={e => e.stopPropagation()}>
-            {
-                opens === 'delete' && <DeleteUser user={user} />
-            }
+            {children}
         </StyledModal>
-    </StyledOverlay >
+    </StyledOverlay >, document.body)
 }
 
 
 Modal.Action = Action;
-Modal.Body = Body;
+Modal.Window = Window;
 
 
 export default Modal;

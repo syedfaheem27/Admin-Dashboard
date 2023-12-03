@@ -3,6 +3,7 @@ import { BiTrash } from "react-icons/bi";
 import { BiEdit } from "react-icons/bi";
 import { FcCheckmark } from "react-icons/fc";
 import Modal from "../ui/Modal";
+import DeleteUser from "./DeleteUser";
 
 const StyledActionContainer = styled.span`
   display: flex;
@@ -30,13 +31,15 @@ const Actions = ({ isEdit, setIsEdit, user, editUser }) => {
   return (
     <Modal>
       <StyledActionContainer>
-        <button>
+        <button className={`${isEdit ? 'save' : 'edit'}`}>
           {isEdit ? <FcCheckmark onClick={handleEdit} /> : <BiEdit onClick={() => setIsEdit(true)} />}
         </button>
-        <Modal.Action opens="delete">
+        <Modal.Action opens="delete" customclass="delete">
           <BiTrash />
         </Modal.Action>
-        <Modal.Body user={user} />
+        <Modal.Window name="delete">
+          <DeleteUser user={user} />
+        </Modal.Window>
       </StyledActionContainer>
     </Modal>
   );
