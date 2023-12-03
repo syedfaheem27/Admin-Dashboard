@@ -27,15 +27,13 @@ export default function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(false);
 
   function searchUsers(searchQuery) {
+    const normalizedQuery = searchQuery.toLowerCase()
     const filteredUsers = cachedUsers.filter(
       (user) =>
-        user.name.startsWith(searchQuery.toLowerCase()) ||
-        user.name.startsWith(searchQuery.toUpperCase()) ||
-        user.email.startsWith(searchQuery.toLowerCase()) ||
-        user.email.startsWith(searchQuery.toUpperCase()) ||
-        user.role.startsWith(searchQuery.toLowerCase()) ||
-        user.role.startsWith(searchQuery.toUpperCase())
-    );
+        user.name.toLowerCase().startsWith(normalizedQuery) ||
+        user.email.toLowerCase().startsWith(normalizedQuery) ||
+        user.role.toLowerCase().startsWith(normalizedQuery)
+    )
 
     setUsers(filteredUsers);
 
