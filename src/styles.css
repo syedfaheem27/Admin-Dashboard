@@ -40,7 +40,9 @@
 .delete-selected:hover {
   background-color: var(--color-pink-400);
 }
-
+.delete-selected:disabled {
+  cursor: not-allowed;
+}
 @media (min-width: 480px) {
   * {
     font-size: 14px;

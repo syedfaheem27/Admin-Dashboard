@@ -46,10 +46,10 @@ const Modal = ({ children }) => {
 }
 
 
-const Action = ({ children, opens, customclass = "" }) => {
+const Action = ({ children, opens, customclass = "", disabled = false }) => {
     const { setOpens } = useContext(ModalContext);
 
-    return <button className={customclass} onClick={() => setOpens(opens)}>
+    return <button disabled={disabled} className={customclass} onClick={() => setOpens(opens)} >
         {children}
     </button>
 }

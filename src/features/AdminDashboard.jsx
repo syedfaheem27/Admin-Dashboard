@@ -23,9 +23,11 @@ const StyledTableContainer = styled.div`
 `;
 
 export default function AdminDashboard() {
-  const { users, setUsers, cachedUsers, setCachedUsers, setIsChecked } = useContext(AppContext);
+  const { users, setUsers, cachedUsers, setCachedUsers, setIsChecked, pageNum, setPageNum } = useContext(AppContext);
 
   const [isLoading, setIsLoading] = useState(false);
+
+
 
   function searchUsers(searchQuery) {
     const normalizedQuery = searchQuery.toLowerCase()
@@ -36,7 +38,9 @@ export default function AdminDashboard() {
         user.role.toLowerCase().startsWith(normalizedQuery)
     )
 
+    setPageNum(1);
     setUsers(filteredUsers);
+
 
     setIsChecked(false)
   }
