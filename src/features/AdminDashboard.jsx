@@ -23,7 +23,7 @@ const StyledTableContainer = styled.div`
 `;
 
 export default function AdminDashboard() {
-  const { users, setUsers, cachedUsers, setCachedUsers, setIsChecked, pageNum, setPageNum } = useContext(AppContext);
+  const { users, setUsers, cachedUsers, setCachedUsers, setIsChecked, setPageNum } = useContext(AppContext);
 
   const [isLoading, setIsLoading] = useState(false);
 
